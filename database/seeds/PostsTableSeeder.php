@@ -14,7 +14,7 @@ class PostsTableSeeder extends Seeder
         DB::table('posts')->insert([
             'user_id' => 1,
             'caption' => 'test',
-            'image' => 'uploads/TOR.jpg'
+            'image' => 'uploads/post.jpeg'
         ]);
     }
 }

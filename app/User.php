@@ -41,7 +41,7 @@ class User extends Authenticatable
     {
         $imagePath = ($this->image) ? $this->image : 'profile/JNiNHZYPax0bk1mZWBDuZbvKfghk7OsZRJjsTrXO.png';
 
-        return '/storage/' . $imagePath;
+        return '/public/' . $imagePath;
     }
 
     public function user()

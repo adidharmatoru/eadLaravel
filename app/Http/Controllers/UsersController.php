@@ -90,7 +90,7 @@ class UsersController extends Controller
         DB::table('users')->where('id', Auth::id())->update([
             'title' => $data['title'],
             'url' => $data['url'],
-            'image' => $imagePath,
+            'avatar' => $imagePath,
             'description' => $data['description'],
             'updated_at' => \Carbon\Carbon::now(),
         ]);

@@ -9,7 +9,7 @@
                     <div class="card-header">
                         <div class="d-flex align-items-center">
                             <div class="pr-3">
-                                <img src="{{ asset('storage/'.$post->image) }}" class="rounded-circle w-100" style="max-width: 40px;">
+                                <img src="{{ asset('storage/'.$post->avatar) }}" class="rounded-circle w-100" style="max-width: 40px;">
                             </div>
                             <div>
                                 <div class="font-weight-bold">
@@ -23,7 +23,7 @@
 
                     <div class="card-body">
                         <a href="/post/{{ $post->id }}">
-                            <img src="/storage/{{ $post->image }}" class="w-100">
+                            <img src="{{ 'storage/'.$post->image }}" class="w-100">
                         </a>
                     </div>
                     <div class="card-footer">

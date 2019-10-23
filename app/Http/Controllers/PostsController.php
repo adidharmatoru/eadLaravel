@@ -71,7 +71,7 @@ class PostsController extends Controller
     public function show($id)
     {
         $post = DB::table('posts')->select('user_id', 'image', 'caption')->where('id', $id)->first();
-        $user = DB::table('users')->select('id', 'name', 'email', 'image')->where('id', $post->user_id)->first();
+        $user = DB::table('users')->select('id', 'name', 'email', 'avatar')->where('id', $post->user_id)->first();
         return view('posts.show', compact('post'))->with('user', $user);
     }
 

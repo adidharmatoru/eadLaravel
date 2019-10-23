@@ -19,7 +19,7 @@ class UsersTableSeeder extends Seeder
             'title' => 'Kordas',
             'description' => 'Huehueue',
             'url' => 'https://adidharmatoru.artcart.id',
-            'image' => 'uploads/TOR.jpg'
+            'avatar' => 'uploads/TOR.jpg'
         ]);
     }
 }
