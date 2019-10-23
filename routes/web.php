@@ -16,14 +16,14 @@ Route::get('/', ['as' => 'home', 'uses' => 'HomeController@index']);
 Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
-
-//    Route::get('/home', 'PostsController@index');
+    /* Post Route */
     Route::get('/post/create', 'PostsController@create');
     Route::post('/post/add', 'PostsController@store');
     Route::get('/post/{post}', 'PostsController@show');
-
+    /* Profile Route */
     Route::get('/profile/{user}', 'UsersController@index')->name('profile.show');
     Route::get('/profile/{user}/edit', 'UsersController@edit')->name('profile.edit');
     Route::patch('/profile/{user}', 'UsersController@update')->name('profile.update');
+
 });
 

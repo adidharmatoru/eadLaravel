@@ -14,11 +14,11 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
-        $user = DB::table('users')->where('id', Auth::id())->first();
-        $post = DB::table('posts')->where('user_id', Auth::id())->latest()->get();
-        $postCount = DB::table('posts')->where('user_id', Auth::id())->count();
+        $user = DB::table('users')->where('id', $id)->first();
+        $post = DB::table('posts')->where('user_id', $id)->latest()->get();
+        $postCount = DB::table('posts')->where('user_id', $id)->count();
 
         return view('profiles.index')->with('postCount', $postCount)->with('user', $user)->with('posts', $post);
     }

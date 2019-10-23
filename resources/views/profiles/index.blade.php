@@ -11,12 +11,15 @@
                 <div class="d-flex align-items-center pb-3">
                     <div class="h4">{{ $user->name }}</div>
                 </div>
-
+                @if(\Illuminate\Support\Facades\Auth::id() == $user->id)
                     <a href="/post/create">Add New Post</a>
+                    @endif
 
             </div>
 
+            @if(\Illuminate\Support\Facades\Auth::id() == $user->id)
                 <a href="/profile/{{ $user->id }}/edit">Edit Profile</a>
+            @endif
 
             <div class="d-flex">
                 <div class="pr-5"><strong>{{ $postCount }}</strong> posts</div>
