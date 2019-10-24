@@ -16,7 +16,7 @@ class HomeController extends Controller
     public function index()
     {
         if (Auth::check()) {
-            $posts = DB::table('posts')->join('users', 'posts.user_id', '=', 'users.id')->select('posts.id', 'posts.user_id', 'posts.image', 'posts.caption', 'users.avatar', 'users.name', 'users.email')->paginate(5);
+            $posts = DB::table('posts')->join('users', 'posts.user_id', '=', 'users.id')->select('posts.id', 'posts.user_id', 'posts.image', 'posts.caption', 'users.avatar', 'users.name', 'users.email')->orderByRaw('posts.updated_at DESC')->paginate(5);
 
             return view('home')->with('posts', $posts);
         }
