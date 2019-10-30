@@ -19,8 +19,9 @@
                            type="text"
                            class="form-control"
                            name="title"
-                           value=""
-                           autocomplete="title" autofocus>
+                           value="{{\Illuminate\Support\Facades\Auth::user()->title}}"
+                           autocomplete="title"
+                           autofocus>
 
                     @if ($errors->has('title'))
                         <span class="invalid-feedback" role="alert">
@@ -36,7 +37,7 @@
                            type="text"
                            class="form-control"
                            name="description"
-                           value=""
+                           value="{{\Illuminate\Support\Facades\Auth::user()->description}}"
                            autocomplete="description" autofocus>
 
                     @if ($errors->has('description'))
@@ -53,7 +54,7 @@
                            type="text"
                            class="form-control"
                            name="url"
-                           value=""
+                           value="{{\Illuminate\Support\Facades\Auth::user()->url}}"
                            autocomplete="url" autofocus>
 
                     @if ($errors->has('url'))
