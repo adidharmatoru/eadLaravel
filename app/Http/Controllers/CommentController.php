@@ -3,16 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Komentar_Post;
+use App\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use mysql_xdevapi\Exception;
 
-class PostsController extends Controller
+class CommentController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
     /**
      * Display a listing of the resource.
      *
@@ -20,11 +18,7 @@ class PostsController extends Controller
      */
     public function index()
     {
-        $users = auth()->user()->following()->pluck('profiles.user_id');
-
-        $posts = Post::whereIn('user_id', $users)->with('user')->latest()->paginate(5);
-
-        return view('posts.index', compact('posts'));
+        //
     }
 
     /**
@@ -34,7 +28,7 @@ class PostsController extends Controller
      */
     public function create()
     {
-        return view('posts.create');
+        //
     }
 
     /**
@@ -43,24 +37,26 @@ class PostsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
         $data = request()->validate([
-            'caption' => 'required',
-            'image' => ['required', 'image'],
+            'comment' => 'required'
         ]);
+        $comment = new Komentar_Post();
+        try{
+            $comment->user_id = Auth::id();
+            $comment->post_id = $id;
+            $comment->comment = $request->comment;
 
-        $imagePath = request('image')->store('uploads/posts/'.Auth::id(), 'public');
-
-        DB::table('posts')->insert([
-            'user_id' => Auth::id(),
-            'caption' => $data['caption'],
-            'image' => $imagePath,
-            'created_at' => \Carbon\Carbon::now(),
-            'updated_at' => \Carbon\Carbon::now(),
-        ]);
-
-        return redirect('/profile/' . auth()->user()->id);
+            $comment->save();
+            if ($request->direct == "home"){
+                return redirect('/');
+            }else{
+                return redirect()->route("post.show",$id);
+            }
+        }catch (\Exception $exception){
+            $exception->getMessage();
+        }
     }
 
     /**
@@ -71,11 +67,6 @@ class PostsController extends Controller
      */
     public function show($id)
     {
-        $post = DB::table('posts')->select('id','user_id', 'image', 'caption','likes')->where('id', $id)->first();
-        $user = DB::table('users')->select('id', 'name', 'email', 'avatar')->where('id', $post->user_id)->first();
-        $comment = Komentar_Post::where('post_id',$id)->with('user')->get();
-        return view('posts.show', compact('post', 'comment'))->with('user', $user);
-
 
     }
 
@@ -99,7 +90,15 @@ class PostsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $like = Post::findOrFail($id);
+        $like->likes = $like->likes + 1;
+        $like->save();
+
+        if ($request->direct == "home"){
+            return redirect('/');
+        }else{
+            return redirect()->route("post.show",$id);
+        }
     }
 
     /**
